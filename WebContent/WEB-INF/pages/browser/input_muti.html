@@ -1,0 +1,60 @@
+<#include "/include/lib.html"/>
+<style>
+	.school{
+		list-style-type: none;
+		padding: 0px;
+		margin:0px;
+		padding-left:15px;
+		display: none;
+		width:200px;
+		border: 1px solid #dddddd;
+		border-top: none;
+		border-radius: 3px;
+		border-radius-left:0px;
+		border-radius-right:0px;
+	}
+	.school li{
+		height: 20px;
+		line-height: 20px;
+	}
+</style>
+<div>
+	<input type="text" class="form-control" name="school" style="width:200px;" onclick="showInput()">
+	<ul class="school">
+		<li>
+			<input type="checkbox" name="a1" value="小学">小学
+		</li>
+		<li>
+			<input type="checkbox" name="a1" value="初中">初中
+		</li>
+		<li>
+			<input type="checkbox" name="a1" value="高中">高中
+		</li>
+		<li>
+			<input type="checkbox" name="a1" value="大学">大学
+		</li>
+		<li style="height:30px;line-height:30px;">
+			<button class="btn btn-success btn-xs pull-right" style="margin-right:10px;" onclick="handle()">确定</button>
+		</li>
+	</ul>
+</div>
+<script>
+function showInput(){
+	$(".school").show();
+}
+function hideInput(){
+	$(".school").hide();
+}
+function handle(){
+	var text = "0";
+	$("input[name='a1']:checked").each(function(){
+		text += ","+$(this).val();
+	})
+	$("input[name='school']").val(text.substring(2));
+	//隐藏
+	hideInput();
+}
+</script>
+
+
+

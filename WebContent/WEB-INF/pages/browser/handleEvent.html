@@ -1,0 +1,69 @@
+<#include "/include/lib.html"/>
+<style>
+	.header{
+		width:100%;
+		height: 220px;
+	}
+	.header div{
+		width:50px;
+		height: 50px;
+		margin-top: 5px;
+		margin-right: 5px;
+		text-align: center;
+		line-height: 50px;
+		color:white;
+		float: left;
+	}
+	.header div:hover{
+		cursor: pointer;
+	}
+	.color0{
+		background-color: green;
+	}
+	.color1{
+		background-color: pink;
+	}
+	.color2{
+		background-color: blue;
+	}
+	.color3{
+		background-color: red;
+	}
+	.result{
+		width:100%;
+		clear:left;
+		height: 120px;
+		margin-top: 10px;
+	}
+</style>
+<div class="header">
+	<#list 1..160 as i>
+		<div class="color${i % 4}" id="div${i}">${i}</div>
+	</#list>
+</div>
+<div class="result">
+	事件执行：
+	<div class="result-div">
+		
+	</div>
+</div>
+<script>
+var mg = {};
+(function(){
+	$(".header div").bind("mouseover",function(e){
+		var dom = $(this);
+		mg.trigger = setTimeout(function(){
+			action(dom,e);
+		},500);
+	}).bind("mouseout",function(e){
+		clearTimeout(mg.trigger);
+	});
+})();
+//操作
+function action(obj,e){
+	var text = $(".result-div").text();
+	var val = $(obj).text() + ":" + e.type +"\r\n";
+	text = val + text;
+	$(".result-div").text(text);
+}
+</script>

@@ -1,0 +1,99 @@
+<#include "/include/lib.html"/>
+<style>
+
+</style>
+<!-- 左边表单区域 -->
+<div style="width:50%;float: left;" id="frm-div">
+	<div style="width:100%;margin: 0px;height: 30px;line-height:30px;
+	font-size: 15px;background-color: #428BCA;padding-left:5px;color: #fff;
+	font-weight: bold;">
+		1.数据 + 模板
+	</div>
+	<table class="mg-table-frm">
+		<tr>
+			<th>数据：</th>
+			<td>
+				<span class="mg-txt-info">
+					注意：请输入json格式数据。
+				</span>
+				<textarea rows="5" id="mg-data" style="resize:none;" class="form-control">{"name":"张三","num":"4309872","phone":"18613073290"}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>模板：</th>
+			<td>
+				<span class="mg-txt-info">
+					注意：请输入freemarker格式模板。
+				</span>
+				<textarea rows="8" id="mg-freemarker" style="resize:none;" class="form-control">尊敬的mg{name!}用户您好，您的快件已发送成功，单号为mg{num!}。收件手机号为mg{phone!}，请注意保持畅通，谢谢合作！</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span class="pull-left mg-txt-info" style="color: red;">
+					模拟freemarker短信模板加数据渲染功能。
+				</span>
+				<span class="pull-right">
+					<a class="btn btn-primary btn-sm" onclick="doRender();"><i class="fa-paper-plane-o"></i> 渲染</a>
+				</span>
+			</td>
+			
+		</tr>
+	</table>
+</div>
+<!-- 右边对比区域 -->
+<div style="width:49%;float: right;margin-right: 6px;">
+	<div style="width:100%;margin: 0px;height: 30px;line-height:30px;
+	font-size: 15px;background-color: #428BCA;padding-left:5px;color: #fff;
+	font-weight: bold;">
+		2.渲染结果
+	</div>
+	<div id="render-result" style="height: 388px;border: 1px solid #dddddd; border-top:none;font-size: 14px;
+	padding:10px;">
+		
+	</div>
+</div>
+
+<script>
+(function(){
+	
+})();
+//渲染模板加数据
+function doRender(){
+	var data = $("#mg-data").val();
+	var freemarker = $("#mg-freemarker").val();
+	
+	if(doCheck(data,freemarker)){
+		$.ajax({
+			url : "${root!}/msgtpl/renderMsg",
+			data:{
+				"data":data,
+				"freemarker":freemarker
+			},
+			dataType:"json",
+			type:'post',
+			async:false,
+			success:function(ret){
+				if(ret.flag){
+					$("#render-result").html("<p>"+ret.msg+"</p>");
+				}
+				console.info(ret);
+			},
+			error:function(ret){
+				console.info(ret);
+			}
+			
+		});
+	}
+}
+//验证
+function doCheck(data,freemarker){
+	if(data.length>0 && freemarker.length>0){
+		return true;
+	}else{
+		layer.alert("数据或者模板不能为空！",function(){
+			return false;
+		})
+	}
+}
+</script>

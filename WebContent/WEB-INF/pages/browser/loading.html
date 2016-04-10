@@ -1,0 +1,51 @@
+<#include "/include/lib.html"/>
+<table id="list"></table>
+<div id="pager"></div>
+
+<button class="btn btn-primary btn-sm" id="test-btn" style="margin-top:10px;">加载大量数据模拟</button>
+
+<script>
+(function(){
+	$("#test-btn").click(function(){
+		var index = layer.load(0, {shade: false});
+       	$.ajax({
+           url: '${root!}/browser/testLoading',
+           async: true,
+           cache: false,
+           type: "post",
+           success: function (data) {
+           		initGrid();
+           },  
+           complete: function(data) {
+               layer.close(index);
+               
+           }  
+       });
+	});
+})();
+
+function initGrid(){
+	jQuery("#list").jqGrid({
+		url : '${root!}/browser/testGrid',
+		datatype : 'json',
+		mtype : 'POST',
+		colNames : [ '学号', '姓名', '性别', '年龄', '爱好' ],
+		colModel : [ 
+		   {name : 'id',index : 'id',width : '20%',align:'center'}, 
+		   {name : 'name',index : 'name',width : '20%',align:'center'}, 
+		   {name : 'sex',index : 'sex',width : '20%',align:'center'}, 
+		   {name : 'age',index : 'age',width : '20%',align:'center'}, 
+		   {name : 'hobby',index : 'hobby',align:'center',width:''}
+		],
+		rowNum : 10,
+		width : $(window).width(),
+		height: '400',
+		autowidth : 'true',
+		rowList : [ 5 , 10, 15 ],
+		pager : '#pager',
+		shrinkToFit : true,
+		viewrecords : true
+	});
+	jQuery("#list").jqGrid('navGrid', '#pager', {edit : false,add : false,del : false,search:false});
+}
+</script>

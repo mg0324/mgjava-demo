@@ -1,0 +1,14 @@
+## vo tmeplate
+start=public class $Class {
+#属性配置
+p=$tabprivate $type $property;
+#set方法配置
+s1=$tabpublic void set$Property($type $property) {
+s2=$tab$tabthis.$property = $property;
+s3=$tab}
+#get方法配置
+g1=$tabpublic $type get$Property() {
+g2=$tab$tabreturn $property;
+g3=$tab}
+	
+end=}

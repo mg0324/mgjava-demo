@@ -1,0 +1,42 @@
+<#include "/include/lib.html"/>
+<style>
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+</style>
+<div>
+	本地：<input type="text" class="form-control" id="local" style="width:200px;"><br/>
+	远程：<input type="text" class="form-control" id="remote" style="width:200px;">
+	
+</div>
+<script>
+$('#local').autocomplete({
+    lookup: function (query, done) {
+        var result = {
+            suggestions: [
+                { "value": "United Arab Emirates", "data": "AE" },
+                { "value": "United Kingdom",       "data": "UK" },
+                { "value": "United States",        "data": "US" }
+            ]
+        };
+
+        done(result);
+    },
+    onSelect: function (suggestion) {
+        alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+    }
+});
+
+$('#remote').autocomplete({
+	serviceUrl: '${root!}/browser/autoRemote',
+    onSelect: function (suggestion) {
+        alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+    }
+}).disable();
+</script>
+
+
+

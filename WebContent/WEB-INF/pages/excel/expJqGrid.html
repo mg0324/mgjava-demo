@@ -1,0 +1,76 @@
+<#include "/include/lib.html"/>
+<style>
+	#list_hobby{
+		width:330px;
+	}
+</style>
+<div style="text-align:right;margin-bottom:5px;margin-right:10px;">
+	<button class='btn btn-primary btn-sm' id="jxl-excel-btn">jxl导出Excel</button>
+	<button class='btn btn-success btn-sm' id='poi-excel-btn'>poi导出Excel</button>
+</div>
+<table id="list"></table>
+<div id="pager"></div>
+
+<script type="text/javascript">
+$(function() {
+	jQuery("#list").jqGrid({
+		url : '${root!}/doExcel/loadStudentJson',
+		datatype : 'json',
+		mtype : 'POST',
+		colNames : [ '学号', '姓名', '性别', '年龄', '爱好' ],
+		colModel : [ 
+		   {name : 'id',index : 'id',width : '20%',align:'center'}, 
+		   {name : 'name',index : 'name',width : '20%',align:'center'}, 
+		   {name : 'sex',index : 'sex',width : '20%',align:'center'}, 
+		   {name : 'age',index : 'age',width : '20%',align:'center'}, 
+		   {name : 'hobby',index : 'hobby',align:'center',width:''}
+		],
+		rowNum : 10,
+		width : $(window).width(),
+		height: '400',
+		autowidth : 'true',
+		rowList : [ 5 , 10, 15 ],
+		pager : '#pager',
+		shrinkToFit : true,
+		viewrecords : true
+	});
+	jQuery("#list").jqGrid('navGrid', '#pager', {edit : false,add : false,del : false,search:false});
+
+	//jxl导出
+	$("#jxl-excel-btn").click(jxl_export);
+	//poi导出
+	$("#poi-excel-btn").click(poi_export);
+});
+//必须是表单提交，别用ajax函数
+function jxl_export(){
+	var form=$("<form>");//定义一个form表单
+	form.attr("style","display:none");
+	form.attr("target","");
+	form.attr("method","post");
+	form.attr("action","${root!}/doExcel/jxlExport");
+	var input1=$("<input>");
+	input1.attr("type","hidden");
+	input1.attr("name","exportData");
+	input1.attr("value",(new Date()).getMilliseconds());
+	$("body").append(form);//将表单放置在web中
+	form.append(input1);
+
+	form.submit();//表单提交 
+}
+//必须是表单提交，别用ajax函数
+function poi_export(){
+	var form=$("<form>");//定义一个form表单
+	form.attr("style","display:none");
+	form.attr("target","");
+	form.attr("method","post");
+	form.attr("action","${root!}/doExcel/poiExport");
+	var input1=$("<input>");
+	input1.attr("type","hidden");
+	input1.attr("name","exportData");
+	input1.attr("value",(new Date()).getMilliseconds());
+	$("body").append(form);//将表单放置在web中
+	form.append(input1);
+
+	form.submit();//表单提交 
+}
+</script>

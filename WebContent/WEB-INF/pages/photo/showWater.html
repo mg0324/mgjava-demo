@@ -1,0 +1,16 @@
+<#include "/include/lib.html"/>
+<style>
+
+</style>
+<#list images as image>
+<div style="width:50%;float: left;">
+	<img src="${root!}/photo/show?path=${image.baseImagePath!}" width="100%">
+</div>
+<!-- 右边对比区域 -->
+<div style="width:50%;float: right;">
+	<img src="${root!}/photo/show?path=${image.waterImagePath!}" width="100%">
+</div>
+</#list>
+<script>
+
+</script>

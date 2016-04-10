@@ -1,0 +1,127 @@
+<style>
+	#fun-toolbar{
+		list-style-type: none;
+		margin:0px;
+		padding:0px;
+		border-right: 1px solid #bdbdbd;
+	}
+	#fun-toolbar li{
+		margin-top:5px;
+	}
+	
+</style>
+<!-- mini toolbar -->
+<div class="mini-toolbar">
+    <a class="mini-button" plain="true" title="生成JavaBean代码" id="bean-btn">JavaBean</a>
+    <span class="separator"></span>
+    <a class="mini-button" plain="true" title="生成ResultMap代码" id="xml-btn">ResultMap</a>
+    <a class="mini-button" plain="true" title="生成CUD代码" id="cud-btn">CUD</a>
+</div>
+<div style="float:left;overflow:hidden;width:100%;">
+<pre style="overflow:scroll;width:100%;height:98%;" id="_code">
+
+</pre>
+</div>
+<textarea id="param-dialog" style="display:none;">
+	<input type="radio" name="px" checked="checked" value="1">表字段名全大写<br/>
+	<input type="radio" name="px" value="2">表字段名首全小写<br/>
+	<input type="radio" name="px" value="3">表字段名首字母大写<br/>
+	<input type="radio" name="px" value="4">表字段名首字母小写<br/>
+	<div style="padding-top:10px;text-algin:right;">
+		<span class="pull-right">
+			<button class="btn btn-primary btn-sm" onclick="nextDoCud();">确定</button>
+			<button class="btn btn-default btn-sm" onclick="cancel();">取消</button>
+		</span>
+	</div>
+	
+</textarea>
+<script>
+var mg = {};
+(function(){
+	mini.parse();
+	$("#bean-btn").bind("click",doBean);
+	$("#xml-btn").bind("click",doXml);
+	$("#cud-btn").bind("click",doCud);
+})();
+//生存bean
+function doBean(){
+	var node = getSelectedNode();
+	if(node == undefined){
+		layer.alert('请先连接数据库，再选中表！');
+		return ;
+	}
+	var tableName = node.name;
+	//将表名传入后台，返回javabean
+	$.ajax({
+        url: "${root!}/gcode/doBean",
+        type: "post",
+        data: {"tableName": tableName },
+        datatype:"json",
+        success: function (res) {
+        	$("#_code").text(res.data);
+        }
+    });
+   
+}
+//生成xml
+function doXml(){
+	var node = getSelectedNode();
+	if(node == undefined){
+		layer.alert('请先连接数据库，再选中表！');
+		return ;
+	}
+	var tableName = node.name;
+	//将表名传入后台，返回javabean
+	$.ajax({
+        url: "${root!}/gcode/doResultMap",
+        type: "post",
+        data: {"tableName": tableName },
+        datatype:"json",
+        success: function (res) {
+        	$("#_code").text(res.data);
+        }
+    });
+}
+//生成cud
+function doCud(){
+	var node = getSelectedNode();
+	if(node == undefined){
+		layer.alert('请先连接数据库，再选中表！');
+		return ;
+	}
+	mg.tableName = node.name;
+	//设置附加条件
+	openParamDialog();
+    
+}
+//设置条件
+function openParamDialog(){
+	mg.index = layer.open({
+		title:'附加条件',
+		shift:4,
+		btn:'',
+		content:$("#param-dialog").text()
+	});
+}
+//下一步
+function nextDoCud(){
+	var px = $("input[name='px']:checked").val();
+	mg.px = px;
+	//将表名传入后台，返回javabean
+	$.ajax({
+        url: "${root!}/gcode/doCud",
+        type: "post",
+        data: {"tableName": mg.tableName,"px":mg.px },
+        datatype:"json",
+        success: function (res) {
+        	$("#_code").text(res.data);
+        	layer.close(mg.index);
+        }
+    });
+}
+//取消
+function cancel(){
+	layer.close(mg.index);
+}
+
+</script>

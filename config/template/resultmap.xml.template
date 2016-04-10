@@ -1,0 +1,5 @@
+#resultMap的模板
+start = <resultMap id="$ClassMap" type="$Class">
+key = $tab<id property="$key" column="$key"></id>
+result = $tab<result property="$property" column="$property" />
+end = </resultMap>

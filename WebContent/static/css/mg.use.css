@@ -1,0 +1,70 @@
+.mg-table{
+	
+}
+.mg-table tr th{
+	font-size:12px;
+	text-align: right;
+	width:100px;
+}
+.mg-table tr td input,.mg-table tr td select{
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	margin-right: 5px;
+}
+.mg-btn{
+	font-size: 12px;
+	padding:3px 5px 3px 5px;
+	border:none;
+}
+.btn-blue{
+	background-color: #1E90FF;
+	color: #fff;
+}
+.btn-radius{
+	border-radius: 4px;
+}
+.mg-title{
+	width:100%;height:20px;font-size:15px;line-height:20px;background:#1E90FF;color:#fff;
+}
+.btn32{
+	width:32px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+}
+.btn25{
+	width:25px;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+}
+.btn-green{
+	background-color: #71ED71;
+	color:#fff;
+}
+.mg-table-frm{
+	width:100%;
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid #dddddd;
+	border-collapse:collapse;
+	border-spacing:0;
+}
+.mg-table-frm th,.mg-table-frm td{
+	border-right:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+	padding:5px 10px;
+}
+.mg-table-frm tr th{
+	vertical-align: middle;
+	background-color: #D3E8FA;
+	font-weight: bold;
+	text-align: right;
+}
+.mg-txt-info{
+	display:inline-block;
+	font-size: 10px;
+	color: gray;
+	padding-bottom: 3px;
+}

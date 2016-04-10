@@ -1,0 +1,21 @@
+#cud template
+#c template insert
+c_start=<insert id="save$Class">
+c_insert=$tabinsert into $class(
+c_p=$tab$tab$Property
+c_values=$tab)values(
+c_p_val=$tab$tab#{$property}
+c_insert_end=$tab)
+c_end=</insert>
+
+#u template update
+u_start=<update id="update$Class">
+u_update=$tabupdate $class set 
+u_p=$tab$tab$Property=#{$property}
+u_where=$tabwhere $Key=#{$key}
+u_end=</update>
+
+#d template delete
+d_start=<delete id="delete$Class">
+d_p=$tabdelete from $class where $Key = #{$key}
+d_end=</delete>
